@@ -9,7 +9,7 @@ const activeChainId = ChainId.Mumbai;
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider desiredChainId={activeChainId}>
+    <ThirdwebProvider activeChain={activeChainId}>
       <Head>
         <title>thirdweb Edition Drop Minting Customizable Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

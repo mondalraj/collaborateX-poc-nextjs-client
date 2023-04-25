@@ -1,4 +1,5 @@
 import {
+  ThirdwebNftMedia,
   useActiveClaimConditionForWallet,
   useAddress,
   useClaimConditions,
@@ -6,6 +7,7 @@ import {
   useClaimIneligibilityReasons,
   useContract,
   useContractMetadata,
+  useNFTs,
   useTotalCirculatingSupply,
   Web3Button,
 } from "@thirdweb-dev/react";
@@ -17,7 +19,7 @@ import { parseIneligibility } from "../utils/parseIneligibility";
 
 // Put Your Edition Drop Contract address from the dashboard here
 const myEditionDropContractAddress =
-  "0xDC8017E1E20BFF80a49B0B92F719f00170013B4F";
+  "0xCc55C5d98294CEB60301c7e679Af0A3EC2d72aAa";
 
 // Put your token ID here
 const tokenId = 0;
@@ -27,6 +29,8 @@ const Home: NextPage = () => {
   const [quantity, setQuantity] = useState(1);
   const { contract: editionDrop } = useContract(myEditionDropContractAddress);
   const { data: contractMetadata } = useContractMetadata(editionDrop);
+
+  const { data: nfts, isLoading: loadingNFTs } = useNFTs(editionDrop);
 
   const claimConditions = useClaimConditions(editionDrop);
   const activeClaimCondition = useActiveClaimConditionForWallet(
@@ -230,11 +234,14 @@ const Home: NextPage = () => {
 
             <div className={styles.imageSide}>
               {/* Image Preview of NFTs */}
-              <img
+              {/* <img
                 className={styles.image}
                 src={contractMetadata?.image}
                 alt={`${contractMetadata?.name} preview image`}
-              />
+              /> */}
+              {nfts?.map((nft) => (
+                <ThirdwebNftMedia key={nft.supply} metadata={nft.metadata} />
+              ))}
 
               {/* Amount claimed so far */}
               <div className={styles.mintCompletionArea}>
